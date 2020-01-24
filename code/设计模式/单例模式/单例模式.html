@@ -29,25 +29,25 @@
         let hiddenbtn = document.getElementById('hidden')
 
         // 闭包实现
-        const Model = (function() {
-          let model = null
+        const Modal = (function() {
+          let modal = null
           return function() {
-            if (!model) {
-              model = document.createElement('div')
-              model.innerText = '我一个单例的模态框'
-              model.style.display = 'none'
-              model.style.color = 'pink'
-              document.body.appendChild(model)
+            if (!modal) {
+              modal = document.createElement('div')
+              modal.innerText = '我一个单例的模态框'
+              modal.style.display = 'none'
+              modal.style.color = 'pink'
+              document.body.appendChild(modal)
             }
-            return model
+            return modal
           }
         })()
 
         showbtn.addEventListener(
           'click',
           function() {
-            const model = new Model()
-            model.style.display = 'block'
+            const modal = new Modal()
+            modal.style.display = 'block'
           },
           false
         )
@@ -55,8 +55,8 @@
         hiddenbtn.addEventListener(
           'click',
           function() {
-            const model = new Model()
-            model.style.display = 'none'
+            const modal = new Modal()
+            modal.style.display = 'none'
           },
           false
         )

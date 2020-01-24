@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        border: 1px solid pink;
+        color: pink;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="show">显示全局模拟框</button>
+    <button id="hidden">隐藏全局模拟框</button>
+    <script>
+      window.onload = function() {
+        let showbtn = document.getElementById('show')
+        let hiddenbtn = document.getElementById('hidden')
+
+        // 闭包实现
+        const Model = (function() {
+          let model = null
+          return function() {
+            if (!model) {
+              model = document.createElement('div')
+              model.innerText = '我一个单例的模态框'
+              model.style.display = 'none'
+              model.style.color = 'pink'
+              document.body.appendChild(model)
+            }
+            return model
+          }
+        })()
+
+        showbtn.addEventListener(
+          'click',
+          function() {
+            const model = new Model()
+            model.style.display = 'block'
+          },
+          false
+        )
+
+        hiddenbtn.addEventListener(
+          'click',
+          function() {
+            const model = new Model()
+            model.style.display = 'none'
+          },
+          false
+        )
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        border: 1px solid pink;
+        color: pink;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="open">open</button>
+    <button id="hidden">hidden</button>
+    <script>
+      /** 原有单例模式
+      const Modal = (function() {
+        let modal = null
+        return function() {
+          if (!modal) {
+            modal = document.createElement('div')
+            modal.style.display = 'none'
+            modal.innerText = 'Modal'
+            document.body.appendChild(modal)
+          }
+          return modal
+        }
+      })()
+
+      document.getElementById('open').addEventListener(
+        'click',
+        function() {
+          const modal = new Modal()
+          console.log(modal)
+
+          modal.style.display = 'block'
+        },
+        false
+      )
+
+      document.getElementById('hidden').addEventListener(
+        'click',
+        function() {
+          const modal = new Modal()
+          modal.style.display = 'none'
+        },
+        false
+      )
+      */
+
+      // 构造器装饰器模式
+      // 原有对象保持不变
+      // const Modal = (function() {
+      //   let modal = null
+      //   return function() {
+      //     if (!modal) {
+      //       modal = document.createElement('div')
+      //       modal.style.display = 'none'
+      //       modal.innerText = 'Modal'
+      //       document.body.appendChild(modal)
+      //     }
+      //     return modal
+      //   }
+      // })()
+
+      // function openModal() {
+      //   // 封装显示模态框逻辑
+      //   const modal = new Modal()
+      //   if (modal) {
+      //     modal.style.display = 'block'
+      //   }
+      // }
+
+      // function changeBtnText() {
+      //   // 封装按钮文字修改逻辑
+      //   const btn = document.getElementById('open')
+      //   btn.innerText = '快点我'
+      // }
+
+      // function disabledBtn() {
+      //   // 封装按钮可否点击逻辑
+      //   const btn = document.getElementById('open')
+      //   btn.setAttribute('disabled', true)
+      // }
+
+      // function changeBtnStatus() {
+      //   // 整和所有封装
+      //   changeBtnText()
+      //   disabledBtn()
+      // }
+
+      // document.getElementById('open').addEventListener(
+      //   'click',
+      //   function() {
+      //     openModal()
+      //     changeBtnStatus()
+      //   },
+      //   false
+      // )
+
+      // class 类 装饰器模式
+      class Modal {
+        constructor() {
+          this.modal = null
+        }
+        static getModal() {
+          if (!this.modal) {
+            this.modal = document.createElement('div')
+            this.modal.innerText = '我是一个class单例模式下的div'
+            this.modal.style.display = 'none'
+            document.body.appendChild(this.modal)
+          }
+          return this.modal
+        }
+      }
+
+      class openModal {
+        click() {
+          const modal = Modal.getModal()
+          modal.style.display = 'block'
+        }
+      }
+
+      class Decorator {
+        constructor(open_button) {
+          this.open_btn = open_button
+        }
+
+        onclick() {
+          this.open_btn.click()
+          this.changeBtnStatus()
+        }
+
+        changeBtnStatus() {
+          this.changeBtnText()
+          this.disabledBtn()
+        }
+
+        changeBtnText() {
+          const btn = document.getElementById('open')
+          btn.innerText = '来点击我啊'
+        }
+
+        disabledBtn() {
+          const btn = document.getElementById('open')
+          btn.setAttor = '来点击我啊'
+        }
+      }
+
+      document.getElementById('open').addEventListener(
+        'click',
+        function() {
+          const openBtn = new openModal()
+          const btn = new Decorator(openBtn)
+          btn.onclick()
+        },
+        false
+      )
+    </script>
+  </body>
+</html>
